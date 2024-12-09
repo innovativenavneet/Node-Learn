@@ -7,7 +7,7 @@ const url = require("url");
 
 // Create a server to handle requests
 const myServer = http.createServer((req, res) => {
-  const log = `${Date.now()} : ${req.url} New request received\n`;
+  const log = `${Date.now()} : ${req.method} ${req.url} New request received\n`;
 
 
 
