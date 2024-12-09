@@ -72,7 +72,7 @@ app.route('user/id/:id')
 
 //creating a post request to the server 
 app.post('/api/user', (req, res) => {
-    const body = req.body; // Extract the request body from the frontend
+    const body = req.body; // Extract the request body from the frontend here i am using postman
 
     // Add a new user to the userData array with a unique ID
     userData.push({ ...body, id: userData.length + 1 });
