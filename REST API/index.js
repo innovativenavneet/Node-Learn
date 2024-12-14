@@ -1,5 +1,5 @@
 const express = require("express");
-const userData = require('./MOCK_DATA.json');
+const userData = require('./MOCK_DATA.json');//consider it as a database 
 const fs = require('fs');
 
 const PORT = 8000;
@@ -8,6 +8,34 @@ const app = express();
 
 // Middlewares 
 app.use(express.urlencoded({extended: false}));
+
+// let's initialize some other middlewares
+app.use((req,res,next)=>{
+    console.log("hello from middlewares");
+
+    // if you want to stop the user and just send the response and end the server then pass the thing below 
+    // return res.json({msg : "hello from middleware 1"});
+     
+    // if not then simply use next();
+    next();
+
+});
+
+// let's see a parctical use-case of middlewares 
+// as we know this will store the request methods everytime we requiest something to server
+app.use((req, res, next) => {
+    fs.appendFile('log.txt', 
+        `\n${Date.now()} : ${req.ip} : ${req.method} : ${req.path}`, 
+        (err) => { // The callback function only takes `err` as a parameter.
+            if (err) {
+                console.error('Error writing to log file:', err);
+                // Optionally handle the error (e.g., send a response or log further).
+            }
+            next(); // Ensure `next` is called regardless of an error.
+        }
+    );
+});
+
 
 // Routes ::: 
 
